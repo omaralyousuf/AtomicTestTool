@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtomicTestTool", "AtomicTestTool\AtomicTestTool.csproj", "{A9EF2417-2402-46A1-80C8-1CC25F746D0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9EF2417-2402-46A1-80C8-1CC25F746D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9EF2417-2402-46A1-80C8-1CC25F746D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9EF2417-2402-46A1-80C8-1CC25F746D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9EF2417-2402-46A1-80C8-1CC25F746D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60579DB0-8F5E-4798-86D0-08DE5DC76C5C}
+	EndGlobalSection
+EndGlobal
