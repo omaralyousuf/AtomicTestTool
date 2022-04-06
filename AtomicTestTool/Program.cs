@@ -1,4 +1,4 @@
-﻿/**
+﻿/* **
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
  * Description: build executables to run hard coded atomic tests
@@ -14,7 +14,7 @@ namespace AtomicTestTool
 {
     internal class Program
     {
-        public static void Main()
+        public void cmdProcessing ()
         {
             try
             {
@@ -22,14 +22,13 @@ namespace AtomicTestTool
                 using (Process process = new Process())
                 {
                     //Method 1 that runs attacks using cmd.exe
-                    
                     // Atomic attack commands (Change the below commands as needed)
                     string[] cmdCommands = { 
-                        "ipconfig /all",
-                        "netsh interface show interface",
-                        "arp -a",
-                        "nbtstat -n",
-                        "net config"
+                    "ipconfig /all",
+                    "netsh interface show interface",
+                    "arp -a",
+                    "nbtstat -n",
+                    "net config"
                     };
 
                     string[] psCommands = {
@@ -61,7 +60,7 @@ namespace AtomicTestTool
                         Console.ReadKey();
                     }
 
-                    if (psCommands.Length > 0)
+                    else
                     {
                         //Method 2 runs attacks using Powershell
                         //Start command prompt process
@@ -78,7 +77,7 @@ namespace AtomicTestTool
                         {
                             strCommand = strCommand + psCommands[command] + " & ";
                         }
-                        process.StartInfo.Arguments = "Powershell -Command " + strCommand;
+                        process.StartInfo.Arguments = "/C Powershell -Command " + strCommand;
                         process.Start();
                         process.StandardInput.Close();
                         process.WaitForExit();
