@@ -5,6 +5,7 @@
  * **/
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace AtomicTestTool
@@ -15,10 +16,9 @@ namespace AtomicTestTool
         {
             string atomicTestNum = "T1016";
 
-            string[] tests = {
-            "Powershell -Command Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" + atomicTestNum + "\\" + atomicTestNum + ".yaml",
-            "Powershell -Command $a.atomic_tests[0].executor.command"
-            };
+            string tests =
+            "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
+            + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[0].executor.command";
 
             Process process = new Process();
 
@@ -28,19 +28,28 @@ namespace AtomicTestTool
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.RedirectStandardInput = true;
             process.StartInfo.FileName = "cmd.exe";
-
-            string strTest = "";
-            for (int test = 0; test < tests.Length; test++)
-            {
-                strTest = strTest + tests[test] + " & ";
-            }
-
-            process.StartInfo.Arguments = "/C " + strTest;
+            process.StartInfo.Arguments = "/C Powershell -Command " + tests;
             process.Start();
             process.StandardInput.Close();
             process.WaitForExit();
             Console.WriteLine(process.StandardOutput.ReadToEnd());
-            Console.ReadKey();
+            //Console.ReadKey();
+
+            string[] line = new string[10];
+            int indexer = 0;
+
+            while (!process.StandardOutput.EndOfStream)
+            {
+                line[indexer] = process.StandardOutput.ReadLine();
+                indexer++; // increment
+            }
+            Console.WriteLine(line);
+            
+            //Psudo code
+            //atomic_test ="T1016-1"
+            //$cmds = (GetAtomic-Technique....).atomic-tests[0]
+            //    replace <<cmd_placeholder>> int Program.cs
+            //    cmd / csc.exe/ compile program.cs into art.exe
 
         }
     }
