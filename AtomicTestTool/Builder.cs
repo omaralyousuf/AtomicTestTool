@@ -32,8 +32,6 @@ namespace AtomicTestTool
             process.Start();
             process.StandardInput.Close();
             process.WaitForExit();
-            Console.WriteLine(process.StandardOutput.ReadToEnd());
-            //Console.ReadKey();
 
             string[] line = new string[10];
             int indexer = 0;
@@ -43,7 +41,7 @@ namespace AtomicTestTool
                 line[indexer] = process.StandardOutput.ReadLine();
                 indexer++; // increment
             }
-            Console.WriteLine(line);
+            string cmd = string.Join("\n", line);
             
             //Psudo code
             //atomic_test ="T1016-1"
