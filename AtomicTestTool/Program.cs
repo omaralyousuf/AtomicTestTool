@@ -24,11 +24,7 @@ namespace AtomicTestTool
                     //Method 1 that runs attacks using cmd.exe
                     // Atomic attack commands (Change the below commands as needed)
                     string[] cmdCommands = { 
-                    "ipconfig /all",
-                    "netsh interface show interface",
-                    "arp -a",
-                    "nbtstat -n",
-                    "net config"
+                    // replace-here
                     };
 
                     string[] psCommands = {

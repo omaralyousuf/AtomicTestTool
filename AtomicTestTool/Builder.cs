@@ -14,6 +14,8 @@ namespace AtomicTestTool
     {
         public static void Main()
         {
+
+            // Get the commands from YAML file
             string atomicTestNum = "T1016";
 
             string tests =
@@ -41,15 +43,25 @@ namespace AtomicTestTool
                 line[indexer] = process.StandardOutput.ReadLine();
                 indexer++; // increment
             }
-            string cmd = string.Join("\n", line);
-            
-            //Psudo code
-            //atomic_test ="T1016-1"
-            //$cmds = (GetAtomic-Technique....).atomic-tests[0]
-            //    replace <<cmd_placeholder>> int Program.cs
-            //    cmd / csc.exe/ compile program.cs into art.exe
+
+            // var file = FileReader("path-here")
+            var file = FileReader("C:\\uers\oyousuf\\tomicTestTool\\tomicTestTool\\rogram.cs");
+            // file.replace("//replace-here",line-array)
+
+            // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
+
+            // export the file into exportFilePath
+
+            // csc exportFilePath outputPath
 
         }
     }
 
 }
+
+
+//Psudo code
+//atomic_test ="T1016-1"
+//$cmds = (GetAtomic-Technique....).atomic-tests[0]
+//    replace <<cmd_placeholder>> int Program.cs
+//    cmd / csc.exe/ compile program.cs into art.exe
