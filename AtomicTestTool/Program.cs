@@ -24,7 +24,7 @@ namespace AtomicTestTool
                     //Method 1 that runs attacks using cmd.exe
                     // Atomic attack commands (Change the below commands as needed)
                     string[] cmdCommands = { 
-                    // replace-here
+                    "replace-here",
                     };
 
                     string[] psCommands = {

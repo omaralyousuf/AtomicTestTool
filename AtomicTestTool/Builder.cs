@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace AtomicTestTool
 {
@@ -45,15 +46,29 @@ namespace AtomicTestTool
             }
 
             // var file = FileReader("path-here")
-            var file = FileReader("C:\\uers\oyousuf\\tomicTestTool\\tomicTestTool\\rogram.cs");
+            var file = File.("C:\\users\\oyousuf\\tomicTestTool\\tomicTestTool\\Program.cs");
+
             // file.replace("//replace-here",line-array)
+            file.Replace("replace-here", line);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
-
+            var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool");
+            
             // export the file into exportFilePath
+            var newFile = StreamWriter(exportFilePath);
 
             // csc exportFilePath outputPath
-
+            Process process2 = new Process();
+            process2.StartInfo.CreateNoWindow = true;
+            process2.StartInfo.UseShellExecute = false;
+            process2.StartInfo.RedirectStandardOutput = true;
+            process2.StartInfo.RedirectStandardError = true;
+            process2.StartInfo.RedirectStandardInput = true;
+            process2.StartInfo.FileName = "cmd.exe";
+            process2.StartInfo.Arguments = "/C csc " + newFile;
+            process2.Start();
+            process2.StandardInput.Close();
+            process2.WaitForExit();
         }
     }
 
