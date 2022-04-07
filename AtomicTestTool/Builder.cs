@@ -18,10 +18,11 @@ namespace AtomicTestTool
 
             // Get the commands from YAML file
             string atomicTestNum = "T1016";
+            string atomicTestSubNum = "0";
 
             string tests =
             "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
-            + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[0].executor.command";
+            + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
 
             Process process = new Process();
 
@@ -45,17 +46,19 @@ namespace AtomicTestTool
                 indexer++; // increment
             }
 
+            string cmd = (string.Join("\",\"", line));
+
             // var file = FileReader("path-here")
-            var file = File.("C:\\users\\oyousuf\\tomicTestTool\\tomicTestTool\\Program.cs");
+            var file = File.ReadAllText("C:\\users\\oyousuf\\tomicTestTool\\tomicTestTool\\Program.cs");
 
             // file.replace("//replace-here",line-array)
-            file.Replace("replace-here", line);
+            file.Replace("replace-here", cmd);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
-            var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool");
+            var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs");
             
             // export the file into exportFilePath
-            var newFile = StreamWriter(exportFilePath);
+            var newFile = File.WriteAllText(exportFilePath,file);
 
             // csc exportFilePath outputPath
             Process process2 = new Process();
