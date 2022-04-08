@@ -46,8 +46,9 @@ namespace AtomicTestTool
                 indexer++; // increment
             }
 
-            string cmd = (string.Join("\",\"", line));
+            string cmd = "\"" + string.Join("\", \"", line) + "\""; ;
 
+            //Console.WriteLine(cmd);
             // var file = FileReader("path-here")
             var file = File.ReadAllText("C:\\users\\oyousuf\\tomicTestTool\\tomicTestTool\\Program.cs");
 
@@ -56,9 +57,9 @@ namespace AtomicTestTool
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
             var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs");
-            
+
             // export the file into exportFilePath
-            var newFile = File.WriteAllText(exportFilePath,file);
+            file.W(exportFilePath, file);
 
             // csc exportFilePath outputPath
             Process process2 = new Process();
