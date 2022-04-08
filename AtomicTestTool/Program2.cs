@@ -1,4 +1,4 @@
-﻿/* **
+/* **
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
  * Description: build executables to run hard coded atomic tests
@@ -24,7 +24,7 @@ namespace AtomicTestTool
                     //Method 1 that runs attacks using cmd.exe
                     // Atomic attack commands (Change the below commands as needed)
                     string[] cmdCommands = { 
-                    "replace-here"
+                    "ipconfig /all", "netsh interface show interface", "arp -a", "nbtstat -n", "net config", "", "", "", "", ""
                     };
 
                     string[] psCommands = {

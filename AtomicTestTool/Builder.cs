@@ -46,20 +46,20 @@ namespace AtomicTestTool
                 indexer++; // increment
             }
 
-            string cmd = "\"" + string.Join("\", \"", line) + "\""; ;
+            string cmd = string.Join("\", \"", line);
 
             //Console.WriteLine(cmd);
             // var file = FileReader("path-here")
-            var file = File.ReadAllText("C:\\users\\oyousuf\\tomicTestTool\\tomicTestTool\\Program.cs");
+            var file = File.ReadAllText("C:\\users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program.cs");
 
             // file.replace("//replace-here",line-array)
-            file.Replace("replace-here", cmd);
+            var file2 = file.Replace("replace-here", cmd);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
             var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs");
 
             // export the file into exportFilePath
-            var newfile = File.WriteAllText(exportFilePath, file);
+            File.WriteAllText(exportFilePath, file2);
 
             // csc exportFilePath outputPath
             Process process2 = new Process();
@@ -69,7 +69,7 @@ namespace AtomicTestTool
             process2.StartInfo.RedirectStandardError = true;
             process2.StartInfo.RedirectStandardInput = true;
             process2.StartInfo.FileName = "cmd.exe";
-            process2.StartInfo.Arguments = "/C csc " + newFile;
+            process2.StartInfo.Arguments = "/C csc " +;
             process2.Start();
             process2.StandardInput.Close();
             process2.WaitForExit();
