@@ -59,7 +59,7 @@ namespace AtomicTestTool
             var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs");
 
             // export the file into exportFilePath
-            file.W(exportFilePath, file);
+            var newfile = File.WriteAllText(exportFilePath, file);
 
             // csc exportFilePath outputPath
             Process process2 = new Process();
