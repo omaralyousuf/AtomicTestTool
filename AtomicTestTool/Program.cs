@@ -1,4 +1,4 @@
-﻿/* **
+/* **
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
  * Description: build executables to run hard coded atomic tests
@@ -51,8 +51,10 @@ namespace AtomicTestTool
                         process.Start();
                         process.StandardInput.Close();
                         process.WaitForExit();
-                        Console.WriteLine(process.StandardOutput.ReadToEnd());
-                        Console.ReadKey();
+
+                        //Uncomment the two line below to show the cmd window
+                        //Console.WriteLine(process.StandardOutput.ReadToEnd());
+                        //Console.ReadKey();
                     }
 
                     else
@@ -79,8 +81,10 @@ namespace AtomicTestTool
                         process.Start();
                         process.StandardInput.Close();
                         process.WaitForExit();
-                        Console.WriteLine(process.StandardOutput.ReadToEnd());
-                        Console.ReadKey();
+
+                        //Uncomment the two line below to show the cmd window
+                        ////Console.WriteLine(process.StandardOutput.ReadToEnd());
+                        ////Console.ReadKey();
                     }
                 }
               
