@@ -13,7 +13,7 @@ namespace AtomicTestTool
 {
     internal class Builder
     {
-        public static void cmd()
+        public static void Main()
         {
             try
             {
