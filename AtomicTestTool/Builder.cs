@@ -61,8 +61,7 @@ namespace AtomicTestTool
             // export the file into exportFilePath
             File.WriteAllText(exportFilePath, file2);
 
-            // csc exportFilePath outputPath
-            
+            // cmd / csc.exe/ compile program.cs into art.exe
             string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc" + 
                 "/out:C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\art.exe" + 
                 "C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
@@ -82,12 +81,4 @@ namespace AtomicTestTool
             }
         }
     }
-
 }
-
-
-//Psudo code
-//atomic_test ="T1016-1"
-//$cmds = (GetAtomic-Technique....).atomic-tests[0]
-//    replace <<cmd_placeholder>> int Program.cs
-//    cmd / csc.exe/ compile program.cs into art.exe
