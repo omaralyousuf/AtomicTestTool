@@ -24,18 +24,18 @@ namespace AtomicTestTool
             "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
             + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
 
-            Process process = new Process();
+            Process process2 = new Process();
 
-            process.StartInfo.CreateNoWindow = true;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.RedirectStandardInput = true;
-            process.StartInfo.FileName = "cmd.exe";
-            process.StartInfo.Arguments = "/C Powershell -Command " + tests;
-            process.Start();
-            process.StandardInput.Close();
-            process.WaitForExit();
+            process2.StartInfo.CreateNoWindow = true;
+            process2.StartInfo.UseShellExecute = false;
+            process2.StartInfo.RedirectStandardOutput = true;
+            process2.StartInfo.RedirectStandardError = true;
+            process2.StartInfo.RedirectStandardInput = true;
+            process2.StartInfo.FileName = "cmd.exe";
+            process2.StartInfo.Arguments = "/C Powershell -Command " + tests;
+            process2.Start();
+            process2.StandardInput.Close();
+            process2.WaitForExit();
 
             string[] line = new string[10];
             int indexer = 0;
@@ -62,17 +62,24 @@ namespace AtomicTestTool
             File.WriteAllText(exportFilePath, file2);
 
             // csc exportFilePath outputPath
-            Process process2 = new Process();
-            process2.StartInfo.CreateNoWindow = true;
-            process2.StartInfo.UseShellExecute = false;
-            process2.StartInfo.RedirectStandardOutput = true;
-            process2.StartInfo.RedirectStandardError = true;
-            process2.StartInfo.RedirectStandardInput = true;
-            process2.StartInfo.FileName = "cmd.exe";
-            process2.StartInfo.Arguments = "/C C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc /out:art.exe C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
-            process2.Start();
-            process2.StandardInput.Close();
-            process2.WaitForExit();
+            
+            string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc" + 
+                "/out:C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\art.exe" + 
+                "C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
+            
+            using (Process process3 = new Process())
+            {
+                process3.StartInfo.CreateNoWindow = true;
+                process3.StartInfo.UseShellExecute = false;
+                process3.StartInfo.RedirectStandardOutput = true;
+                process3.StartInfo.RedirectStandardError = true;
+                process3.StartInfo.RedirectStandardInput = true;
+                process3.StartInfo.FileName = "cmd.exe";
+                process3.StartInfo.Arguments = "/C " + compileCSC;
+                process3.Start();
+                process3.StandardInput.Close();
+                process3.WaitForExit();
+            }
         }
     }
 
