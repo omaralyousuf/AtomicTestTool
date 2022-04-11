@@ -13,7 +13,7 @@ namespace AtomicTestTool
 {
     internal class Builder
     {
-        public static void Main()
+        public static void cmd()
         {
 
             // Get the commands from YAML file
@@ -69,7 +69,7 @@ namespace AtomicTestTool
             process2.StartInfo.RedirectStandardError = true;
             process2.StartInfo.RedirectStandardInput = true;
             process2.StartInfo.FileName = "cmd.exe";
-            process2.StartInfo.Arguments = "/C csc " +;
+            process2.StartInfo.Arguments = "/C C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc /out:art.exe C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
             process2.Start();
             process2.StandardInput.Close();
             process2.WaitForExit();

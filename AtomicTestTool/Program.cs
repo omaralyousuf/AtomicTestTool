@@ -6,15 +6,12 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Management.Automation;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace AtomicTestTool
 {
     internal class Program
     {
-        public static void cmdProcessing ()
+        public static void Main()
         {
             try
             {
@@ -23,8 +20,8 @@ namespace AtomicTestTool
                 {
                     //Method 1 that runs attacks using cmd.exe
                     // Atomic attack commands (Change the below commands as needed)
-                    string[] cmdCommands = { 
-                    "replace-here"
+                    string[] cmdCommands = {
+                    "ipconfig /all", "netsh interface show interface", "arp -a", "nbtstat -n", "net config", "", ""
                     };
 
                     string[] psCommands = {
@@ -46,7 +43,10 @@ namespace AtomicTestTool
                         string strCommand = "";
                         for (int command = 0; command < cmdCommands.Length; command++)
                         {
-                            strCommand = strCommand + cmdCommands[command] + " & ";
+                            if (cmdCommands[command] != "")
+                            {
+                                strCommand = strCommand + cmdCommands[command] + " & ";
+                            }
                         }
                         process.StartInfo.Arguments = "/C " + strCommand;
                         process.Start();
@@ -71,7 +71,10 @@ namespace AtomicTestTool
                         string strCommand = "";
                         for (int command = 0; command < psCommands.Length; command++)
                         {
-                            strCommand = strCommand + psCommands[command] + " & ";
+                            if (psCommands[command] != "")
+                            {
+                                strCommand = strCommand + psCommands[command] + " & ";
+                            }
                         }
                         process.StartInfo.Arguments = "/C Powershell -Command " + strCommand;
                         process.Start();
