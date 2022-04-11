@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
  * Description: build executables to run hard coded atomic tests
@@ -17,7 +17,6 @@ namespace AtomicTestTool
         {
             try
             {
-
             // Get the commands from YAML file
             string atomicTestNum = "T1016";
             string atomicTestSubNum = "0";
@@ -50,7 +49,6 @@ namespace AtomicTestTool
 
             string cmd = string.Join("\", \"", line);
 
-            //Console.WriteLine(cmd);
             // var file = FileReader("path-here")
             var file = File.ReadAllText("C:\\users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program.cs");
 
@@ -64,8 +62,8 @@ namespace AtomicTestTool
             File.WriteAllText(exportFilePath, file2);
 
             // cmd / csc.exe/ compile program.cs into art.exe
-            string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc" + 
-                "/out:C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\art.exe" + 
+            string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc " + 
+                "/out:C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\art.exe " + 
                 "C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
             
                 using (Process process3 = new Process())
