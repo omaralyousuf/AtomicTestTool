@@ -42,9 +42,9 @@ namespace AtomicTestTool
             string[] line = new string[10];
             int indexer = 0;
 
-            while (!process.StandardOutput.EndOfStream)
+            while (!process2.StandardOutput.EndOfStream)
             {
-                line[indexer] = process.StandardOutput.ReadLine();
+                line[indexer] = process2.StandardOutput.ReadLine();
                 indexer++; // increment
             }
 
