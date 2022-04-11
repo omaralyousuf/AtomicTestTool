@@ -18,17 +18,16 @@ namespace AtomicTestTool
                 
                 using (Process process = new Process())
                 {
-                    //Method 1 that runs attacks using cmd.exe
-                    // Atomic attack commands (Change the below commands as needed)
+                    
+                    // Atomic attack commands fed in from builder
                     string[] cmdCommands = {
-                    "ipconfig /all", "netsh interface show interface", "arp -a", "nbtstat -n", "net config", "", ""
+                    "replace-here"
                     };
 
                     string[] psCommands = {
-                    "New-Item -Path 'Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Feature'",
-                    "New-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Feature' -name 'TamperData' -value 0"
                     };
 
+                    //Method 1 that runs attacks using cmd.exe
                     if (cmdCommands.Length > 0)
                     {
                         //Start command prompt process
