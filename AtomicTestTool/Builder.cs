@@ -15,6 +15,8 @@ namespace AtomicTestTool
     {
         public static void cmd()
         {
+            try
+            {
 
             // Get the commands from YAML file
             string atomicTestNum = "T1016";
@@ -66,18 +68,23 @@ namespace AtomicTestTool
                 "/out:C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\art.exe" + 
                 "C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs";
             
-            using (Process process3 = new Process())
+                using (Process process3 = new Process())
+                {
+                    process3.StartInfo.CreateNoWindow = true;
+                    process3.StartInfo.UseShellExecute = false;
+                    process3.StartInfo.RedirectStandardOutput = true;
+                    process3.StartInfo.RedirectStandardError = true;
+                    process3.StartInfo.RedirectStandardInput = true;
+                    process3.StartInfo.FileName = "cmd.exe";
+                    process3.StartInfo.Arguments = "/C " + compileCSC;
+                    process3.Start();
+                    process3.StandardInput.Close();
+                    process3.WaitForExit();
+                }
+            }
+            catch (Exception e)
             {
-                process3.StartInfo.CreateNoWindow = true;
-                process3.StartInfo.UseShellExecute = false;
-                process3.StartInfo.RedirectStandardOutput = true;
-                process3.StartInfo.RedirectStandardError = true;
-                process3.StartInfo.RedirectStandardInput = true;
-                process3.StartInfo.FileName = "cmd.exe";
-                process3.StartInfo.Arguments = "/C " + compileCSC;
-                process3.Start();
-                process3.StandardInput.Close();
-                process3.WaitForExit();
+                Console.WriteLine(e.Message);
             }
         }
     }
