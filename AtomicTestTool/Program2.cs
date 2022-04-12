@@ -21,7 +21,7 @@ namespace AtomicTestTool
                     
                     // Atomic attack commands fed in from builder
                     string[] cmdCommands = {
-                    "replace-here"
+                    "", "", "", "", "", "", "", "", "", ""
                     };
 
                     string[] psCommands = {
