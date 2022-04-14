@@ -47,7 +47,16 @@ namespace AtomicTestTool
                 indexer++; // increment
             }
 
+            for (int i = 0; i < line.Length; i++)
+                {
+                    if (line[i].Contains("\""))
+                    {
+                        line[i] = line[i].Replace("\"", "\\\"");
+                    }
+                }
+             
             string cmd = string.Join("\", \"", line);
+            
             //getteing directory of AtomicTestTool
             var dir = Directory.GetCurrentDirectory();
             string newDir = dir.Substring(0, dir.Length - 9);
