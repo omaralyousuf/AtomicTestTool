@@ -57,19 +57,17 @@ namespace AtomicTestTool
              
             string cmd = string.Join("\", \"", line);
             
-            //getteing directory of AtomicTestTool
+            // getting current directory of AtomicTestTool
             var dir = Directory.GetCurrentDirectory();
             string newDir = dir.Substring(0, dir.Length - 9);
 
             // var file = FileReader("path-here")
-            //var file = File.ReadAllText("C:\\users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program.cs");
             var file = File.ReadAllText(newDir + "\\Program.cs");
 
             // file.replace("//replace-here",line-array)
             var file2 = file.Replace("replace-here", cmd);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
-            //var exportFilePath = ("C:\\Users\\oyousuf\\AtomicTestTool\\AtomicTestTool\\Program2.cs");
             var exportFilePath = (newDir + "\\Program2.cs");
 
             // export the file into exportFilePath
@@ -77,8 +75,8 @@ namespace AtomicTestTool
 
             // cmd / csc.exe/ compile program.cs into art.exe
             string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc " +
-                "/out:" + newDir + "art.exe " +
-                newDir + "Program2.cs";
+                                "/out:" + newDir + "art.exe " +
+                                 newDir + "Program2.cs";
 
             using (Process process3 = new Process())
             {
