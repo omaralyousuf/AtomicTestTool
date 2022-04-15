@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace AtomicTestTool
 {
@@ -38,16 +39,27 @@ namespace AtomicTestTool
             process2.StandardInput.Close();
             process2.WaitForExit();
 
-            string[] line = new string[15];
+                
+                    string[] line = new string[15];
+                    int counter = 0;
+
+                    while (!process2.StandardOutput.EndOfStream)
+                    {
+                        line[counter] = process2.StandardOutput.ReadLine();
+                        if (line != null)
+                        counter++; // increment
+                    }
+
+            string[] line1 = new string[counter+1];
             int indexer = 0;
 
             while (!process2.StandardOutput.EndOfStream)
             {
-                line[indexer] = process2.StandardOutput.ReadLine();
+                line1[indexer] = process2.StandardOutput.ReadLine();
                 indexer++; // increment
             }
 
-            string cmd = string.Join("\", \"", line);
+            string cmd = string.Join("\", \"", line1);
             string cmdFinal = cmd.Replace("\"\"", "\"");
 
             // getting current directory of AtomicTestTool

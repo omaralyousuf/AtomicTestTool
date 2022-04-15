@@ -21,7 +21,7 @@ namespace AtomicTestTool
                     
                     // Atomic attack commands fed in from builder
                     string[] cmdCommands = {
-                    "ipconfig /all", "netsh interface show interface", "arp -a", "nbtstat -n", "net config", ", ", ", ", ", ", ", ", ", ""
+                    "", ", ", ", ", ", ""
                     };
 
                     string[] psCommands = {
