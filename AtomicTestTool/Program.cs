@@ -28,7 +28,7 @@ namespace AtomicTestTool
                     };
 
                     //Method 1 that runs attacks using cmd.exe
-                    if (cmdCommands.Length > 12)
+                    if (cmdCommands.Length > 1)
                     {
                         //Start command prompt process
                         process.StartInfo.CreateNoWindow = true;
@@ -58,7 +58,7 @@ namespace AtomicTestTool
                         Console.ReadKey();
                     }
 
-                    else if (psCommands.Length > 2)
+                    else if (psCommands.Length > 1)
                     {
                         //Method 2 runs attacks using Powershell
                         //Start command prompt process

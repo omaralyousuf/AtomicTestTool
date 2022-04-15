@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace AtomicTestTool
 {
@@ -19,7 +18,7 @@ namespace AtomicTestTool
         {
             try
             {
-            // Get the commands from YAML file
+            // get the commands from YAML file
             string atomicTestNum = "T1016";
             string atomicTestSubNum = "0";
 
@@ -27,7 +26,7 @@ namespace AtomicTestTool
             "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
             + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
 
-            // Start a process to use cmd.exe
+            // start a process to use cmd.exe
             Process process2 = new Process();
             process2.StartInfo.CreateNoWindow = true;
             process2.StartInfo.UseShellExecute = false;
@@ -41,7 +40,7 @@ namespace AtomicTestTool
             process2.WaitForExit();
 
             // insert the atomic command into an array
-            string[] line = new string[20];
+            string[] line = new string[30];
             int indexer = 0;
 
             while (!process2.StandardOutput.EndOfStream)
@@ -50,7 +49,7 @@ namespace AtomicTestTool
                 indexer++;
             }
 
-            //Remove empty elements from the array
+            // remove empty elements from the array
             List<string> y = line.ToList<string>();
             y.RemoveAll(p => string.IsNullOrEmpty(p));
             line = y.ToArray();
