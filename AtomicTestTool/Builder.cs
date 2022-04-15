@@ -21,7 +21,7 @@ namespace AtomicTestTool
             {
                 // get the commands from YAML file
                 string atomicTestNum = "T1016";
-                int atomicTestSubNum = 2;
+                int atomicTestSubNum = 0;
 
                 PowerShell ps = PowerShell.Create();
                 ps.AddCommand("Get-AtomicTechnique").AddParameter("Path", $@"C:\Users\asmith\Documents\code\atomic-red-team\atomics\{atomicTestNum}\{atomicTestNum}.yaml");
