@@ -8,7 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
+using System.Management.Automation;
+using System.Text.RegularExpressions;
 
 namespace AtomicTestTool
 {
@@ -18,74 +19,46 @@ namespace AtomicTestTool
         {
             try
             {
-            // get the commands from YAML file
-            string atomicTestNum = "T1016";
-            string atomicTestSubNum = "0";
+                // get the commands from YAML file
+                string atomicTestNum = "T1016";
+                int atomicTestSubNum = 2;
 
-            string tests =
-            $@"(Get-AtomicTechnique -Path C:\atomicredteam\atomics\" 
-            + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
+                PowerShell ps = PowerShell.Create();
+                ps.AddCommand("Get-AtomicTechnique").AddParameter("Path", $@"C:\Users\asmith\Documents\code\atomic-red-team\atomics\{atomicTestNum}\{atomicTestNum}.yaml");
 
-            // start a process to use cmd.exe
-            Process process2 = new Process();
-            process2.StartInfo.CreateNoWindow = true;
-            process2.StartInfo.UseShellExecute = false;
-            process2.StartInfo.RedirectStandardOutput = true;
-            process2.StartInfo.RedirectStandardError = true;
-            process2.StartInfo.RedirectStandardInput = true;
-            process2.StartInfo.FileName = "cmd.exe";
-            process2.StartInfo.Arguments = "/C Powershell -Command " + tests;
-            process2.Start();
-            process2.StandardInput.Close();
-            process2.WaitForExit();
+                dynamic technique = ps.Invoke()[0];
+                var atomic_tests = technique.atomic_tests;
+                var my_test = atomic_tests[atomicTestSubNum];
+                var my_executor = my_test.executor.name;
+                var my_commands = my_test.executor.command;
+                String exec_command = "";
 
-            // insert the atomic command into an array
-            string[] line = new string[30];
-            int indexer = 0;
+                if(my_executor == "command_prompt")
+                {
+                    exec_command = my_commands.Replace("\n", " & "); // replace newlines with ampersand
+                }
+                else if (my_executor == "powershell")
+                {
+                    exec_command = Regex.Replace(my_commands, "(?<!;)\n", "; "); // add semicolon to end of line unless already has one
+                }
 
-            while (!process2.StandardOutput.EndOfStream)
-            {
-                line[indexer] = process2.StandardOutput.ReadLine();
-                indexer++;
-            }
+                // directory of AtomicTestTool
+                var dir = ((Directory.GetParent(Directory.GetCurrentDirectory())).Parent).FullName;
 
-            // remove empty elements from the array
-            List<string> y = line.ToList<string>();
-            y.RemoveAll(p => string.IsNullOrEmpty(p));
-            line = y.ToArray();
+                var file = File.ReadAllText(dir + "\\Program.cs");
 
-            // Replace " with \" for all array elements in order for cmd to read them
-            for (int i = 0; i < line.Length; i++)
-            {
-                    if (line[i].Contains("\""))
-                    {
-                        line[i] = line[i].Replace("\"", "\\\"");
-                    }
-            }
+                // handle commands with double quotes in them, then replace into program.cs
+                var escaped_command = exec_command.Replace("\"", "\\\"");
+                var file2 = file.Replace("replace-here", escaped_command);
+                file2 = file2.Replace("the-executor", my_executor);
 
-            // Join commands as a string with each one wrapped by double quotes
-            string cmd = string.Join("\", \"", line);
+                var exportFilePath = (dir + "\\Program2.cs");
 
-            // getting current directory of AtomicTestTool
-            var dir = Directory.GetCurrentDirectory();
-            string newDir = dir.Substring(0, dir.Length - 9);
+                // export the file into exportFilePath
+                File.WriteAllText(exportFilePath, file2);
 
-            // var file = FileReader("path-here")
-            var file = File.ReadAllText(newDir + $@"\Program.cs");
-
-            // file.replace("//replace-here",line-array)
-            var file2 = file.Replace("-a", cmd);
-
-            // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
-            var exportFilePath = (newDir + "\\Program2.cs");
-
-            // export the file into exportFilePath
-            File.WriteAllText(exportFilePath, file2);
-
-            // cmd / csc.exe/ compile program.cs into art.exe
-            string compileCSC = $@"C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc " +
-                                "/out:" + newDir + "art.exe " +
-                                newDir + "Program2.cs";
+                // cmd / csc.exe/ compile program.cs into art.exe
+                string compileCSC = $@"C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc /reference:C:\Windows\assembly\GAC_MSIL\System.Management.Automation\1.0.0.0__31bf3856ad364e35\system.management.automation.dll /out:{dir}\art.exe {exportFilePath}";
 
                 using (Process process3 = new Process())
                 {

@@ -6,6 +6,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Management.Automation;
+using System.Text;
 
 namespace AtomicTestTool
 {
@@ -19,16 +21,11 @@ namespace AtomicTestTool
                 {
 
                     // Atomic attack commands fed in from builder
-                    string[] cmdCommands = {
-                        "-a"
-                    };
-
-                    string[] psCommands = {
-                        "-b"
-                    };
+                    String cmdCommands = "replace-here";
+                    String cmdExecutor = "the-executor";
 
                     //Method 1 that runs attacks using cmd.exe
-                    if (cmdCommands[0].Length > 2)
+                    if (cmdExecutor == "command_prompt")
                     {
                         //Start command prompt process
                         process.StartInfo.CreateNoWindow = true;
@@ -38,16 +35,7 @@ namespace AtomicTestTool
                         process.StartInfo.RedirectStandardInput = true;
                         process.StartInfo.FileName = "cmd.exe";
 
-                        //Loop thru the array of commands
-                        string strCommand = "";
-                        for (int command = 0; command < cmdCommands.Length; command++)
-                        {
-                            if (cmdCommands[command] != "")
-                            {
-                                strCommand = strCommand + cmdCommands[command] + " & ";
-                            }
-                        }
-                        process.StartInfo.Arguments = "/C " + strCommand;
+                        process.StartInfo.Arguments = "/C " + cmdCommands;
                         process.Start();
                         process.StandardInput.Close();
                         var lines = process.StandardOutput.ReadToEnd();
@@ -58,34 +46,22 @@ namespace AtomicTestTool
                         Console.ReadKey();
                     }
 
-                    else if (psCommands[0].Length > 2)
-                        {
-                        //Method 2 runs attacks using Powershell
-                        //Start command prompt process
-                        process.StartInfo.CreateNoWindow = true;
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.RedirectStandardOutput = true;
-                        process.StartInfo.RedirectStandardError = true;
-                        process.StartInfo.RedirectStandardInput = true;
-                        process.StartInfo.FileName = "cmd.exe";
+                    else if (cmdExecutor == "powershell")
+                    {
+                        PowerShell ps = PowerShell.Create();
+                        ps.AddScript(cmdCommands);
 
-                        //Loop thru the array of commands
-                        string strCommand = "";
-                        for (int command = 0; command < psCommands.Length; command++)
-                        {
-                            if (psCommands[command] != "")
-                            {
-                                strCommand = strCommand + psCommands[command] + " & ";
-                            }
-                        }
-                        process.StartInfo.Arguments = "/C Powershell -Command " + strCommand;
-                        process.Start();
-                        process.StandardInput.Close();
-                        var lines = process.StandardOutput.ReadToEnd();
-                        process.WaitForExit();
+                        var retobj = ps.Invoke();
 
                         //Uncomment the two line below to show the cmd window
-                        Console.WriteLine(lines);
+                        StringBuilder stringBuilder = new StringBuilder();
+                        foreach (PSObject obj in retobj)
+                        {
+                            stringBuilder.AppendLine(obj.ToString());
+                        }
+
+                        var rez = stringBuilder.ToString();
+                        Console.WriteLine(rez);
                         Console.ReadKey();
                     }
                 }
