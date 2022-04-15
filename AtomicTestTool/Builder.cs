@@ -26,8 +26,8 @@ namespace AtomicTestTool
             "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
             + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
 
+            // Start a process to use cmd.exe
             Process process2 = new Process();
-
             process2.StartInfo.CreateNoWindow = true;
             process2.StartInfo.UseShellExecute = false;
             process2.StartInfo.RedirectStandardOutput = true;
@@ -39,7 +39,7 @@ namespace AtomicTestTool
             process2.StandardInput.Close();
             process2.WaitForExit();
 
-                
+                    // counter for the number of commands pulled from the atomic
                     string[] line = new string[15];
                     int counter = 0;
 
@@ -49,7 +49,8 @@ namespace AtomicTestTool
                         if (line != null)
                         counter++; // increment
                     }
-
+            
+            // Insert the commands into an array
             string[] line1 = new string[counter+1];
             int indexer = 0;
 
