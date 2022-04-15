@@ -47,16 +47,9 @@ namespace AtomicTestTool
                 indexer++; // increment
             }
 
-            for (int i = 0; i < line.Length; i++)
-                {
-                    if (line[i].Contains("\""))
-                    {
-                        line[i] = line[i].Replace("\"", "\\\"");
-                    }
-                }
-             
             string cmd = string.Join("\", \"", line);
-            
+            string cmdFinal = cmd.Replace("\"\"", "\"");
+
             // getting current directory of AtomicTestTool
             var dir = Directory.GetCurrentDirectory();
             string newDir = dir.Substring(0, dir.Length - 9);
@@ -65,7 +58,7 @@ namespace AtomicTestTool
             var file = File.ReadAllText(newDir + "\\Program.cs");
 
             // file.replace("//replace-here",line-array)
-            var file2 = file.Replace("replace-here", cmd);
+            var file2 = file.Replace("replace-here", cmdFinal);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
             var exportFilePath = (newDir + "\\Program2.cs");
@@ -76,21 +69,21 @@ namespace AtomicTestTool
             // cmd / csc.exe/ compile program.cs into art.exe
             string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc " +
                                 "/out:" + newDir + "art.exe " +
-                                 newDir + "Program2.cs";
+                                newDir + "Program2.cs";
 
-            using (Process process3 = new Process())
-            {
-                process3.StartInfo.CreateNoWindow = true;
-                process3.StartInfo.UseShellExecute = false;
-                process3.StartInfo.RedirectStandardOutput = true;
-                process3.StartInfo.RedirectStandardError = true;
-                process3.StartInfo.RedirectStandardInput = true;
-                process3.StartInfo.FileName = "cmd.exe";
-                process3.StartInfo.Arguments = "/C " + compileCSC;
-                process3.Start();
-                process3.StandardInput.Close();
-                process3.WaitForExit();
-            }
+                using (Process process3 = new Process())
+                {
+                    process3.StartInfo.CreateNoWindow = true;
+                    process3.StartInfo.UseShellExecute = false;
+                    process3.StartInfo.RedirectStandardOutput = true;
+                    process3.StartInfo.RedirectStandardError = true;
+                    process3.StartInfo.RedirectStandardInput = true;
+                    process3.StartInfo.FileName = "cmd.exe";
+                    process3.StartInfo.Arguments = "/C " + compileCSC;
+                    process3.Start();
+                    process3.StandardInput.Close();
+                    process3.WaitForExit();
+                }
             }
             catch (Exception e)
             {
