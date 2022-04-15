@@ -20,15 +20,15 @@ namespace AtomicTestTool
 
                     // Atomic attack commands fed in from builder
                     string[] cmdCommands = {
-                    "replace-here"
+                        "-a"
                     };
 
                     string[] psCommands = {
-                        "-c"
+                        "-b"
                     };
 
                     //Method 1 that runs attacks using cmd.exe
-                    if (cmdCommands.Length > 1)
+                    if (cmdCommands[0].Length > 2)
                     {
                         //Start command prompt process
                         process.StartInfo.CreateNoWindow = true;
@@ -58,8 +58,8 @@ namespace AtomicTestTool
                         Console.ReadKey();
                     }
 
-                    else if (psCommands.Length > 1)
-                    {
+                    else if (psCommands[0].Length > 2)
+                        {
                         //Method 2 runs attacks using Powershell
                         //Start command prompt process
                         process.StartInfo.CreateNoWindow = true;

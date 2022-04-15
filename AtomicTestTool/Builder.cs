@@ -54,11 +54,17 @@ namespace AtomicTestTool
             y.RemoveAll(p => string.IsNullOrEmpty(p));
             line = y.ToArray();
 
+            // Replace " with \" for all array elements in order for cmd to read them
+            for (int i = 0; i < line.Length; i++)
+            {
+                    if (line[i].Contains("\""))
+                    {
+                        line[i] = line[i].Replace("\"", "\\\"");
+                    }
+            }
+
             // Join commands as a string with each one wrapped by double quotes
-             string cmd = string.Join("\", \"", line);
-            
-            // some commands already include double quotes, this line is to ensure there are no doublicates 
-            string cmdFinal = cmd.Replace("\"\"", "\"");
+            string cmd = string.Join("\", \"", line);
 
             // getting current directory of AtomicTestTool
             var dir = Directory.GetCurrentDirectory();
@@ -68,7 +74,7 @@ namespace AtomicTestTool
             var file = File.ReadAllText(newDir + "\\Program.cs");
 
             // file.replace("//replace-here",line-array)
-            var file2 = file.Replace("replace-here", cmdFinal);
+            var file2 = file.Replace("-a", cmd);
 
             // exportFilePath = AnyFilePath\SomeFolderName\anyFilename.cs
             var exportFilePath = (newDir + "\\Program2.cs");
