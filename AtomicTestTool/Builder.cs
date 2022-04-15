@@ -23,7 +23,7 @@ namespace AtomicTestTool
             string atomicTestSubNum = "0";
 
             string tests =
-            "(Get-AtomicTechnique -Path C:\\atomicredteam\\atomics\\" 
+            $@"(Get-AtomicTechnique -Path C:\atomicredteam\atomics\" 
             + atomicTestNum + "\\" + atomicTestNum + ".yaml).atomic_tests[" + atomicTestSubNum + "].executor.command";
 
             // start a process to use cmd.exe
@@ -71,7 +71,7 @@ namespace AtomicTestTool
             string newDir = dir.Substring(0, dir.Length - 9);
 
             // var file = FileReader("path-here")
-            var file = File.ReadAllText(newDir + "\\Program.cs");
+            var file = File.ReadAllText(newDir + $@"\Program.cs");
 
             // file.replace("//replace-here",line-array)
             var file2 = file.Replace("-a", cmd);
@@ -83,7 +83,7 @@ namespace AtomicTestTool
             File.WriteAllText(exportFilePath, file2);
 
             // cmd / csc.exe/ compile program.cs into art.exe
-            string compileCSC = "C:\\Windows\\Microsoft.NET\\Framework\\v4.0.30319\\csc " +
+            string compileCSC = $@"C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc " +
                                 "/out:" + newDir + "art.exe " +
                                 newDir + "Program2.cs";
 
