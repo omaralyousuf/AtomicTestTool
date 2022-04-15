@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AtomicTestTool
@@ -39,28 +40,25 @@ namespace AtomicTestTool
             process2.StandardInput.Close();
             process2.WaitForExit();
 
-                    // counter for the number of commands pulled from the atomic
-                    string[] line = new string[15];
-                    int counter = 0;
-
-                    while (!process2.StandardOutput.EndOfStream)
-                    {
-                        line[counter] = process2.StandardOutput.ReadLine();
-                        if (line != null)
-                        counter++; // increment
-                    }
-            
-            // Insert the commands into an array
-            string[] line1 = new string[counter+1];
+            // insert the atomic command into an array
+            string[] line = new string[20];
             int indexer = 0;
 
             while (!process2.StandardOutput.EndOfStream)
             {
-                line1[indexer] = process2.StandardOutput.ReadLine();
-                indexer++; // increment
+                line[indexer] = process2.StandardOutput.ReadLine();
+                indexer++;
             }
 
-            string cmd = string.Join("\", \"", line1);
+            //Remove empty elements from the array
+            List<string> y = line.ToList<string>();
+            y.RemoveAll(p => string.IsNullOrEmpty(p));
+            line = y.ToArray();
+
+            // Join commands as a string with each one wrapped by double quotes
+             string cmd = string.Join("\", \"", line);
+            
+            // some commands already include double quotes, this line is to ensure there are no doublicates 
             string cmdFinal = cmd.Replace("\"\"", "\"");
 
             // getting current directory of AtomicTestTool

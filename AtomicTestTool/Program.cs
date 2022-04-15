@@ -14,17 +14,13 @@ namespace AtomicTestTool
         public static void Main()
         {
             try
-            {
-                
+            {   
                 using (Process process = new Process())
                 {
                     
                     // Atomic attack commands fed in from builder
                     string[] cmdCommands = {
                     "replace-here"
-                    };
-
-                    string[] psCommands = {
                     };
 
                     //Method 1 that runs attacks using cmd.exe
@@ -47,38 +43,19 @@ namespace AtomicTestTool
                                 strCommand = strCommand + cmdCommands[command] + " & ";
                             }
                         }
-                        process.StartInfo.Arguments = "/C " + strCommand;
-                        process.Start();
-                        process.StandardInput.Close();
-                        var lines = process.StandardOutput.ReadToEnd();
-                        process.WaitForExit();
 
-                        //Uncomment the two line below to show the cmd window
-                        Console.WriteLine(lines);
-                        Console.ReadKey();
-                    }
-
-                    else
-                    {
-                        //Method 2 runs attacks using Powershell
-                        //Start command prompt process
-                        process.StartInfo.CreateNoWindow = true;
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.RedirectStandardOutput = true;
-                        process.StartInfo.RedirectStandardError = true;
-                        process.StartInfo.RedirectStandardInput = true;
-                        process.StartInfo.FileName = "cmd.exe";
-
-                        //Loop thru the array of commands
-                        string strCommand = "";
-                        for (int command = 0; command < psCommands.Length; command++)
+                        // Command Line
+                        if (strCommand.Length < 40)
                         {
-                            if (psCommands[command] != "")
-                            {
-                                strCommand = strCommand + psCommands[command] + " & ";
-                            }
+                            process.StartInfo.Arguments = "/C " + strCommand;
                         }
+
+                        // Powershell
+                        else
+                        {
                         process.StartInfo.Arguments = "/C Powershell -Command " + strCommand;
+                        }
+
                         process.Start();
                         process.StandardInput.Close();
                         var lines = process.StandardOutput.ReadToEnd();
@@ -88,6 +65,7 @@ namespace AtomicTestTool
                         Console.WriteLine(lines);
                         Console.ReadKey();
                     }
+
                 }
               
             }
