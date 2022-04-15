@@ -53,7 +53,7 @@ namespace AtomicTestTool
 
                         var retobj = ps.Invoke();
 
-                        //Uncomment the two line below to show the cmd window
+                        //Uncomment the lines below to show the cmd window
                         StringBuilder stringBuilder = new StringBuilder();
                         foreach (PSObject obj in retobj)
                         {
