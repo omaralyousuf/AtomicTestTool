@@ -1,0 +1,15 @@
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\AtomicTestTool.exe.config
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\AtomicTestTool.exe
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\AtomicTestTool.pdb
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\Cake.Powershell.dll
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\System.Management.Automation.dll
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\YamlDotNet.dll
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\Cake.Powershell.pdb
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\Cake.Powershell.xml
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\bin\Release\YamlDotNet.xml
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.csproj.AssemblyReference.cache
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.csproj.SuggestedBindingRedirects.cache
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.csproj.CoreCompileInputs.cache
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.csproj.CopyComplete
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.exe
+C:\Users\oyousuf\AtomicTestTool\AtomicTestTool\obj\Release\AtomicTestTool.pdb

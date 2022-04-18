@@ -24,7 +24,7 @@ namespace AtomicTestTool
                     String cmdCommands = "replace-here";
                     String cmdExecutor = "the-executor";
 
-                    //Method 1 that runs attacks using cmd.exe
+                    //Method 1 that runs Atomics using cmd.exe
                     if (cmdExecutor == "command_prompt")
                     {
                         //Start command prompt process
@@ -34,18 +34,19 @@ namespace AtomicTestTool
                         process.StartInfo.RedirectStandardError = true;
                         process.StartInfo.RedirectStandardInput = true;
                         process.StartInfo.FileName = "cmd.exe";
-
                         process.StartInfo.Arguments = "/C " + cmdCommands;
                         process.Start();
                         process.StandardInput.Close();
                         var lines = process.StandardOutput.ReadToEnd();
                         process.WaitForExit();
 
-                        //Uncomment the two line below to show the cmd window
-                        Console.WriteLine(lines);
-                        Console.ReadKey();
+                        #if DEBUG
+                            Console.WriteLine(lines);
+                            Console.ReadKey();
+                        #endif
                     }
 
+                    //Method 2 that runs Atomics Powershell 
                     else if (cmdExecutor == "powershell")
                     {
                         PowerShell ps = PowerShell.Create();
@@ -53,7 +54,6 @@ namespace AtomicTestTool
 
                         var retobj = ps.Invoke();
 
-                        //Uncomment the lines below to show the cmd window
                         StringBuilder stringBuilder = new StringBuilder();
                         foreach (PSObject obj in retobj)
                         {
@@ -61,8 +61,12 @@ namespace AtomicTestTool
                         }
 
                         var rez = stringBuilder.ToString();
-                        Console.WriteLine(rez);
-                        Console.ReadKey();
+
+                        
+                        #if DEBUG
+                            Console.WriteLine(rez);
+                            Console.ReadKey();
+                        #endif
                     }
                 }
 
