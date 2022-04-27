@@ -20,14 +20,14 @@ namespace AtomicTestTool
             try
             {
                 // get Atomic from YAML files
-                string[] atomicNum = { "T1016,0", "T1016,1" }; // specify Atomic num and sub num
+                string[] atomicNum = { "T1016-0", "T1016-1" }; // specify Atomic num and sub num
                 var my_executor = "";
                 var my_commands = "";
 
                 foreach (string i in atomicNum)
                 {
-                    string atomicTestNum = i.Substring(0, i.IndexOf(','));
-                    int atomicTestSubNum = int.Parse(i.Substring(i.LastIndexOf(',') + 1));
+                    string atomicTestNum = i.Substring(0, i.IndexOf('-'));
+                    int atomicTestSubNum = int.Parse(i.Substring(i.LastIndexOf('-') + 1));
                     
                     // get the commands from YAML file
                     PowerShell ps = PowerShell.Create();
