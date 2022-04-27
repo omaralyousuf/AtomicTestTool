@@ -19,21 +19,32 @@ namespace AtomicTestTool
         {
             try
             {
-                // get the commands from YAML file
-                string atomicTestNum = "T1016";
-                int atomicTestSubNum = 0;
+                // get Atomic from YAML files
+                string[] atomicNum = { "T1016,0", "T1016,1" }; // specify Atomic num and sub num
+                var my_executor = "";
+                var my_commands = "";
 
-                PowerShell ps = PowerShell.Create();
-                ps.AddCommand("Get-AtomicTechnique").AddParameter("Path", $@"C:\AtomicRedTeam\atomics\{atomicTestNum}\{atomicTestNum}.yaml");
+                foreach (string i in atomicNum)
+                {
+                    string atomicTestNum = i.Substring(0, i.IndexOf(','));
+                    int atomicTestSubNum = int.Parse(i.Substring(i.LastIndexOf(',') + 1));
+                    
+                    // get the commands from YAML file
+                    PowerShell ps = PowerShell.Create();
+                    ps.AddCommand("Get-AtomicTechnique")
+                      .AddParameter("Path", $@"C:\AtomicRedTeam\atomics\{atomicTestNum}\{atomicTestNum}.yaml");
 
-                dynamic technique = ps.Invoke()[0];
-                var atomic_tests = technique.atomic_tests;
-                var my_test = atomic_tests[atomicTestSubNum];
-                var my_executor = my_test.executor.name;
-                var my_commands = my_test.executor.command;
+                    dynamic technique = ps.Invoke()[0];
+                    var atomic_tests = technique.atomic_tests;
+                    var my_test = atomic_tests[atomicTestSubNum];
+                    my_executor = my_test.executor.name;
+                    my_commands = my_test.executor.command;
+                    
+                }
+
                 String exec_command = "";
 
-                if(my_executor == "command_prompt")
+                if (my_executor == "command_prompt")
                 {
                     exec_command = my_commands.Replace("\n", " & "); // replace newlines with ampersand
                 }
@@ -44,7 +55,6 @@ namespace AtomicTestTool
 
                 // directory of AtomicTestTool
                 var dir = ((Directory.GetParent(Directory.GetCurrentDirectory())).Parent).FullName;
-
                 var file = File.ReadAllText(dir + "\\Program.cs");
 
                 // handle commands with double quotes in them, then replace into program.cs

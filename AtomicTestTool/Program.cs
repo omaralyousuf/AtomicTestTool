@@ -40,6 +40,7 @@ namespace AtomicTestTool
                         var lines = process.StandardOutput.ReadToEnd();
                         process.WaitForExit();
 
+                        //Show command window in debug mode
                         #if DEBUG
                             Console.WriteLine(lines);
                             Console.ReadKey();
@@ -62,7 +63,7 @@ namespace AtomicTestTool
 
                         var rez = stringBuilder.ToString();
 
-                        
+                        //Show command window in debug mode
                         #if DEBUG
                             Console.WriteLine(rez);
                             Console.ReadKey();
