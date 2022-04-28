@@ -5,6 +5,7 @@
  * **/
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -20,39 +21,49 @@ namespace AtomicTestTool
             try
             {
                 // get Atomic from YAML files
-                string[] atomicNum = { "T1016-0", "T1016-1" }; // specify Atomic num and sub num
+                string[] atomicNum = {"T1016-0", "T1016-1"};
+                
                 var my_executor = "";
                 var my_commands = "";
+                ArrayList executorArrayList = new ArrayList();
+                ArrayList commandsArrayList = new ArrayList();
 
-                foreach (string i in atomicNum)
-                {
+                foreach (var i in atomicNum)
+                { 
                     string atomicTestNum = i.Substring(0, i.IndexOf('-'));
-                    int atomicTestSubNum = int.Parse(i.Substring(i.LastIndexOf('-') + 1));
-                    
-                    // get the commands from YAML file
+                    int atomicTechniqueNum = int.Parse(i.Substring(i.LastIndexOf('-') + 1));
+
                     PowerShell ps = PowerShell.Create();
                     ps.AddCommand("Get-AtomicTechnique")
                       .AddParameter("Path", $@"C:\AtomicRedTeam\atomics\{atomicTestNum}\{atomicTestNum}.yaml");
 
                     dynamic technique = ps.Invoke()[0];
                     var atomic_tests = technique.atomic_tests;
-                    var my_test = atomic_tests[atomicTestSubNum];
-                    my_executor = my_test.executor.name;
-                    my_commands = my_test.executor.command;
+                    var my_test = atomic_tests[atomicTechniqueNum];
                     
+                    my_executor = my_test.executor.name;
+                    executorArrayList.Add(my_executor); //Add executer to an ArrayList
+
+                    my_commands = my_test.executor.command;
+                    commandsArrayList.Add(my_commands); //Add commands to an ArrayList
+
                 }
+                ArrayList exec_command = new ArrayList();
 
-                String exec_command = "";
-
-                if (my_executor == "command_prompt")
+                for (int i = 0; i < executorArrayList.Count; i++)
                 {
-                    exec_command = my_commands.Replace("\n", " & "); // replace newlines with ampersand
+                    for (int j = 0; j < commandsArrayList.Count; j++)
+                    {
+                        if (executorArrayList[i] == "command_prompt")
+                        {
+                            exec_command.Add(commandsArrayList[j]); //.Replace("\n", " & "); // replace newlines with ampersand
+                        }
+                        else if (executorArrayList[i] == "powershell")
+                        {
+                            exec_command.Add(Regex.Replace(my_commands, "(?<!;)\n", "; ")); // add semicolon to end of line unless already has one
+                        }
+                    }
                 }
-                else if (my_executor == "powershell")
-                {
-                    exec_command = Regex.Replace(my_commands, "(?<!;)\n", "; "); // add semicolon to end of line unless already has one
-                }
-
                 // directory of AtomicTestTool
                 var dir = ((Directory.GetParent(Directory.GetCurrentDirectory())).Parent).FullName;
                 var file = File.ReadAllText(dir + "\\Program.cs");
