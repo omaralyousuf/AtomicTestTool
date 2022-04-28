@@ -48,31 +48,56 @@ namespace AtomicTestTool
                     commandsArrayList.Add(my_commands); //Add commands to an ArrayList
 
                 }
+
                 ArrayList exec_command = new ArrayList();
 
-                for (int i = 0; i < executorArrayList.Count; i++)
+                foreach (string i in executorArrayList)
                 {
-                    for (int j = 0; j < commandsArrayList.Count; j++)
+                    foreach (string j in commandsArrayList)
                     {
-                        if (executorArrayList[i] == "command_prompt")
+                        if (i == "command_prompt")
                         {
-                            exec_command.Add(commandsArrayList[j]); //.Replace("\n", " & "); // replace newlines with ampersand
+                            // replace newlines with ampersand and handle commands with double quotes in them
+                            exec_command.Add(j.ToString().Replace("\n", " & ").Replace("\"", "\\\""));
                         }
-                        else if (executorArrayList[i] == "powershell")
+                        
+                        else if (i == "powershell")
                         {
-                            exec_command.Add(Regex.Replace(my_commands, "(?<!;)\n", "; ")); // add semicolon to end of line unless already has one
+                            exec_command.Add(j);
+                            // add semicolon to end of line unless already has one and handle commands with double quotes in them
+                            Regex.Replace(j.ToString(), "(?<!;)\n", "; ").Replace("\"", "\\\"");
                         }
+
                     }
                 }
+                
+                foreach(var exec in exec_command)
+                {
+                    Console.WriteLine(exec);
+                }
+
                 // directory of AtomicTestTool
                 var dir = ((Directory.GetParent(Directory.GetCurrentDirectory())).Parent).FullName;
                 var file = File.ReadAllText(dir + "\\Program.cs");
 
-                // handle commands with double quotes in them, then replace into program.cs
-                var escaped_command = exec_command.Replace("\"", "\\\"");
+                //Convert ArrayLists into string
+                String execString = "";
+                foreach (String exec in executorArrayList)
+                {
+                   execString = exec.ToString();
+                }
+                //Console.WriteLine(execString);
+
+                String commandsString = "";
+                foreach (String cmd in exec_command)
+                {
+                    commandsString = commandsString + cmd.ToString();
+                }
+                //Console.WriteLine(commandsString);
+
+                var file2 = file.Replace("replace-here", commandsString);
+                file2 = file2.Replace("the-executor", execString);
                 
-                var file2 = file.Replace("replace-here", escaped_command);
-                file2 = file2.Replace("the-executor", my_executor);
                 var exportFilePath = (dir + "\\Program2.cs");
 
                 // export the file into exportFilePath

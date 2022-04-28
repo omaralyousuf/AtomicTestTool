@@ -21,7 +21,7 @@ namespace AtomicTestTool
                 {
 
                     // Atomic attack commands fed in from builder
-                    String cmdCommands = "ipconfig /all & netsh interface show interface & arp -a & nbtstat -n & net config & schtasks.exe /create /tn mytask /st 00:00 /sc once /f /tr \"powershell.exe Get-Date | Out-File -Append $env:Temp/dates.txt\" & ";
+                    string cmdCommands = "ipconfig /all & netsh interface show interface & arp -a & nbtstat -n & net config & schtasks.exe /create /tn mytask /st 00:00 /sc once /f /tr \"powershell.exe Get-Date | Out-File -Append $env:Temp/dates.txt\" & netsh advfirewall firewall show rule name=all & ipconfig /all & netsh interface show interface & arp -a & nbtstat -n & net config & schtasks.exe /create /tn mytask /st 00:00 /sc once /f /tr \"powershell.exe Get-Date | Out-File -Append $env:Temp/dates.txt\" & netsh advfirewall firewall show rule name=all & ";
                     String cmdExecutor = "command_prompt";
 
                     //Method 1 that runs Atomics using cmd.exe
