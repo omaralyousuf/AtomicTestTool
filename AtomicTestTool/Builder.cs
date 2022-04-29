@@ -20,8 +20,8 @@ namespace AtomicTestTool
         {
             try
             {
-                // get Atomic from YAML files
-                string[] atomicNum = {"T1016-0", "T1016-1"};
+                // gSpecify number of Atomics
+                string[] atomicNum = {"T1016-0", "T1016-1", "T1014-0"};
                 
                 var my_executor = "";
                 var my_commands = "";
@@ -67,13 +67,8 @@ namespace AtomicTestTool
                             // add semicolon to end of line unless already has one and handle commands with double quotes in them
                             Regex.Replace(j.ToString(), "(?<!;)\n", "; ").Replace("\"", "\\\"");
                         }
-
                     }
-                }
-                
-                foreach(var exec in exec_command)
-                {
-                    Console.WriteLine(exec);
+                    break;
                 }
 
                 // directory of AtomicTestTool
@@ -84,7 +79,7 @@ namespace AtomicTestTool
                 String execString = "";
                 foreach (String exec in executorArrayList)
                 {
-                   execString = exec.ToString();
+                   execString = execString + exec.ToString() + ",";
                 }
                 //Console.WriteLine(execString);
 
@@ -93,7 +88,7 @@ namespace AtomicTestTool
                 {
                     commandsString = commandsString + cmd.ToString();
                 }
-                //Console.WriteLine(commandsString);
+                Console.WriteLine(commandsString);
 
                 var file2 = file.Replace("replace-here", commandsString);
                 file2 = file2.Replace("the-executor", execString);

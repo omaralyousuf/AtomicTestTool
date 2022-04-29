@@ -21,7 +21,7 @@ namespace AtomicTestTool
                 {
 
                     // Atomic attack commands fed in from builder
-                    string cmdCommands = "replace-here";
+                    String cmdCommands = "replace-here";
                     String cmdExecutor = "the-executor";
 
                     //Method 1 that runs Atomics using cmd.exe
