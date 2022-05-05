@@ -1,7 +1,7 @@
 /* **
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
- * Description: build executables to run hard coded atomic tests
+ * Description: build executables to run mutiple Atomic
  * **/
 
 using System;
@@ -21,53 +21,59 @@ namespace AtomicTestTool
                 {
 
                     // Atomic attack commands fed in from builder
-                    String cmdCommands = "replace-here";
-                    String cmdExecutor = "the-executor";
-
-                    //Method 1 that runs Atomics using cmd.exe
-                    if (cmdExecutor == "command_prompt")
+                    String[] cmdCommands = { "replace-here" };
+                    String[] cmdExecutors = { "the-executor" };
+                    
+                    for (int i = 0; i < cmdExecutors.Length; i++)
                     {
-                        //Start command prompt process
-                        process.StartInfo.CreateNoWindow = true;
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.RedirectStandardOutput = true;
-                        process.StartInfo.RedirectStandardError = true;
-                        process.StartInfo.RedirectStandardInput = true;
-                        process.StartInfo.FileName = "cmd.exe";
-                        process.StartInfo.Arguments = "/C " + cmdCommands;
-                        process.Start();
-                        process.StandardInput.Close();
-                        var lines = process.StandardOutput.ReadToEnd();
-                        process.WaitForExit();
-
-                        //Show command window in debug mode
-                        #if DEBUG
-                            Console.WriteLine(lines);
-                            Console.ReadKey();
-                        #endif
-                    }
-
-                    //Method 2 that runs Atomics Powershell 
-                    else if (cmdExecutor == "powershell")
-                    {
-                        PowerShell ps = PowerShell.Create();
-                        ps.AddScript(cmdCommands);
-
-                        var retobj = ps.Invoke();
-
-                        StringBuilder stringBuilder = new StringBuilder();
-                        foreach (PSObject obj in retobj)
+                        for (int j = 0; j < cmdCommands.Length; j++)
                         {
-                            stringBuilder.AppendLine(obj.ToString());
+                            //Method 1 that runs Atomics using cmd.exe
+                            if (cmdExecutors[i] == "command_prompt")
+                            {
+                                //Start command prompt process
+                                process.StartInfo.CreateNoWindow = true;
+                                process.StartInfo.UseShellExecute = false;
+                                process.StartInfo.RedirectStandardOutput = true;
+                                process.StartInfo.RedirectStandardError = true;
+                                process.StartInfo.RedirectStandardInput = true;
+                                process.StartInfo.FileName = "cmd.exe";
+                                process.StartInfo.Arguments = "/C " + cmdCommands[j];
+                                process.Start();
+                                process.StandardInput.Close();
+                                var lines = process.StandardOutput.ReadToEnd();
+                                process.WaitForExit();
+
+                                //Show command window in debug mode
+                                //#if DEBUG
+                                Console.WriteLine(lines);
+                                Console.ReadKey();
+                                //#endif
+                            }
+
+                            //Method 2 that runs Atomics Powershell 
+                            //else if (cmdExecutor == "sh")
+                            //{
+                            //    PowerShell ps = PowerShell.Create();
+                            //    ps.AddScript(cmdCommand);
+
+                            //    var retobj = ps.Invoke();
+
+                            //    StringBuilder stringBuilder = new StringBuilder();
+                            //    foreach (PSObject obj in retobj)
+                            //    {
+                            //        stringBuilder.AppendLine(obj.ToString());
+                            //    }
+
+                            //    var rez = stringBuilder.ToString();
+
+                            //    //Show command window in debug mode
+                            //    //#if DEBUG
+                            //    Console.WriteLine(rez);
+                            //    Console.ReadKey();
+                            //    //#endif
+                            //}
                         }
-
-                        var rez = stringBuilder.ToString();
-
-                        //Show command window in debug mode
-                        #if DEBUG
-                            Console.WriteLine(rez);
-                            Console.ReadKey();
-                        #endif
                     }
                 }
 

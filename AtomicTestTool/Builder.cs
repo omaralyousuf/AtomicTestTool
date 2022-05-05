@@ -1,7 +1,7 @@
 /**
  * Author: Omar Al Yousuf
  * Date: 03/21/2022
- * Description: build executables to run hard coded atomic tests
+ * Description: build executables to run mutiple Atomics
  * **/
 
 using System;
@@ -21,7 +21,7 @@ namespace AtomicTestTool
             try
             {
                 // gSpecify number of Atomics
-                string[] atomicNum = {"T1016-0", "T1016-1", "T1014-0"};
+                string[] atomicNum = {"T1016-0", "T1016-1"};
                 
                 var my_executor = "";
                 var my_commands = "";
@@ -42,15 +42,15 @@ namespace AtomicTestTool
                     var my_test = atomic_tests[atomicTechniqueNum];
                     
                     my_executor = my_test.executor.name;
-                    executorArrayList.Add(my_executor); //Add executer to an ArrayList
+                    executorArrayList.Add(my_executor);//Add executer to an ArrayList
 
                     my_commands = my_test.executor.command;
                     commandsArrayList.Add(my_commands); //Add commands to an ArrayList
+                    commandsArrayList.Add("?");
 
                 }
 
                 ArrayList exec_command = new ArrayList();
-
                 foreach (string i in executorArrayList)
                 {
                     foreach (string j in commandsArrayList)
@@ -61,7 +61,7 @@ namespace AtomicTestTool
                             exec_command.Add(j.ToString().Replace("\n", " & ").Replace("\"", "\\\""));
                         }
                         
-                        else if (i == "powershell")
+                        else if (i == "sh")
                         {
                             exec_command.Add(j);
                             // add semicolon to end of line unless already has one and handle commands with double quotes in them
@@ -81,13 +81,14 @@ namespace AtomicTestTool
                 {
                    execString = execString + exec.ToString() + ",";
                 }
-                //Console.WriteLine(execString);
+                execString = execString.Replace(",", "\",\"");
 
                 String commandsString = "";
                 foreach (String cmd in exec_command)
                 {
                     commandsString = commandsString + cmd.ToString();
                 }
+                commandsString = commandsString.Replace("?", "\",\"");
                 Console.WriteLine(commandsString);
 
                 var file2 = file.Replace("replace-here", commandsString);
